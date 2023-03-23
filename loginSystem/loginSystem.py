@@ -4,63 +4,98 @@ class loginSystem:
     database = "./data.json"
     with open (database, "r") as db:
         accounts = json.load(db)
+    tempDatabase = {}
 
-    testDict = {}
-    for account in accounts:
-        username = account['username']
-        testDict[username] = account['password']
-
-    # def createAccount():
-    #     item['username'] = input("New Username: ")
-    #     item['password'] = input("New Password: ")
-
-    #     loginSystem.accounts.append(item)
-
-    #     with open (loginSystem.database, "w") as db:
-    #         json.dump(loginSystem.accounts, db, indent=4)
+    def updateTempDatabase():
+        for account in loginSystem.accounts:
+            username = account['username']
+            loginSystem.tempDatabase[username] = account['password']
 
     def userLogin():
+        loginSystem.updateTempDatabase()
         while True:
             username = input("Username: ")
-            if username in loginSystem.testDict:
+            if username in loginSystem.tempDatabase:
                 while True:
                     password = input('Password: ')
-                    if password == loginSystem.testDict[username]:
+                    if password == loginSystem.tempDatabase[username]:
                         print("SUCCESS")
-                        break
+                        # break
+                        return True
                     else:
-                        print("WRONG PASSWORD!")
-                break
+                        print("INCORRECT PASSWORD!")
+                # break
             else:
                 print("USER NOT FOUND")
 
     def createAccount():
+        loginSystem.updateTempDatabase()
         newUser = {}
         while True:
-            newUser['username'] = input("Create username: ")
-            if newUser['username'] in loginSystem.testDict:
-                print("Username TAKEN! Try again...")
+            newUser['username'] = input("Create Username: ")
+            if newUser['username'] in loginSystem.tempDatabase:
+                print("Username TAKEN! Try Again...")
             else:
-                newUser['password'] = input("Create a password: ")
-                loginSystem.accounts.append(newUser)
+                newPassword = input("Create A Password: ")
+                while True:
+                    confirmPassword = input("Confirm Password: ")
+                    if newPassword == confirmPassword:
+                        newUser['password'] = confirmPassword
+                        loginSystem.accounts.append(newUser)
+                        with open (loginSystem.database, "w") as db:
+                            json.dump(loginSystem.accounts, db, indent=4)
 
-                with open (loginSystem.database, "w") as db:
-                    json.dump(loginSystem.accounts, db, indent=4)
+                        print("SUCCESS! " + newUser['username'] + " has been created.")
+                        return 
+                    else:
+                        print("PASSWORDS DO NOT MATCH!")   
 
-                print("SUCCESS! " + newUser['username'] + " has been created.")
-                break
+    def deleteAccount():
+        loginSystem.updateTempDatabase()
 
+        newData = []
+        while True:
+            username = input("Username: ")
+            if username in loginSystem.tempDatabase:
+                while True:
+                    password = input("Password: ")
+                    if password == loginSystem.tempDatabase[username]:
+                        confirmPassword = input("Confirm Password to DELETE Account: ")
+                        if password == confirmPassword:
+                            for account in loginSystem.accounts:
+                                if username in account['username'] and password in account['password']:
+                                    pass
+                                else:
+                                    newData.append(account)
+                            with open(loginSystem.database, "w") as db:
+                                json.dump(newData, db, indent=4)
+                            print(username + " has been DELETED.")
+                            return
+                        else:
+                            print("PASSWORDS DO NOT MATCH!!")
+                    else:
+                        print("INCORRECT PASSOWRD!")
+            else:
+                print("Username DOES NOT Exists!")
+            
     def main():
-        prompt = input("Login or Create Account? ")
+        prompt = input("------------------------\nLogin | Create Account | Delete Account(BETA)\n>>> ")
 
         if prompt == "Login" or prompt == "login":
             loginSystem.userLogin()
-        elif prompt == "Create Account" or prompt == "create account":
-            loginSystem.newUser()
+            loginSystem.main()
+        elif prompt == "Create Account" or prompt == "create account" or prompt == "create":
+            loginSystem.createAccount()
+            loginSystem.main()
+        elif prompt == "Delete Account" or prompt == "delete account" or prompt == "delete":
+            loginSystem.deleteAccount()
+            loginSystem.main()
+        elif prompt == "Exit" or prompt == "exit" or prompt == "X" or prompt == "x":
+            return
         else:
             loginSystem.main()
 
-# loginSystem.main()
+loginSystem.main()
 
 # print(loginSystem.accounts)
 # loginSystem.userLogin()

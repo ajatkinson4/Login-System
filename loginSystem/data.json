@@ -4,10 +4,6 @@
         "password": "123"
     },
     {
-        "username": "test",
-        "password": "123"
-    },
-    {
         "username": "dom",
         "password": "liga"
     },
@@ -24,11 +20,23 @@
         "password": "killer"
     },
     {
-        "username": "pussy",
-        "password": "slayer"
-    },
-    {
         "username": "camilamorales",
         "password": "alexIsHot"
+    },
+    {
+        "username": "Mike",
+        "password": "Cockiner"
+    },
+    {
+        "username": "update",
+        "password": "realTime"
+    },
+    {
+        "username": "updateFr",
+        "password": "test"
+    },
+    {
+        "username": "updateFrFr",
+        "password": "itWillWork"
     }
 ]
