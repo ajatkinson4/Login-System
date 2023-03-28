@@ -7,6 +7,12 @@ class loginSystem:
     tempDatabase = {}
 
     def updateTempDatabase():
+        loginSystem.database = "./data.json"
+        with open (loginSystem.database, "r") as db:
+            loginSystem.accounts = json.load(db)
+        loginSystem.tempDatabase = {}
+
+
         for account in loginSystem.accounts:
             username = account['username']
             loginSystem.tempDatabase[username] = account['password']
@@ -21,10 +27,9 @@ class loginSystem:
                     if password == loginSystem.tempDatabase[username]:
                         print("SUCCESS")
                         # break
-                        return True
+                        return
                     else:
                         print("INCORRECT PASSWORD!")
-                # break
             else:
                 print("USER NOT FOUND")
 
@@ -52,7 +57,6 @@ class loginSystem:
 
     def deleteAccount():
         loginSystem.updateTempDatabase()
-
         newData = []
         while True:
             username = input("Username: ")
@@ -79,7 +83,7 @@ class loginSystem:
                 print("Username DOES NOT Exists!")
             
     def main():
-        prompt = input("------------------------\nLogin | Create Account | Delete Account(BETA)\n>>> ")
+        prompt = input("------------------------\nLogin | Create Account | Delete Account\n>>> ")
 
         if prompt == "Login" or prompt == "login":
             loginSystem.userLogin()
