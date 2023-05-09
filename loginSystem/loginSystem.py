@@ -1,4 +1,5 @@
 import json
+from specialPassword import *
 
 class loginSystem:
     database = "./data.json"
@@ -41,19 +42,28 @@ class loginSystem:
             if newUser['username'] in loginSystem.tempDatabase:
                 print("Username TAKEN! Try Again...")
             else:
-                newPassword = input("Create A Password: ")
-                while True:
-                    confirmPassword = input("Confirm Password: ")
-                    if newPassword == confirmPassword:
-                        newUser['password'] = confirmPassword
-                        loginSystem.accounts.append(newUser)
-                        with open (loginSystem.database, "w") as db:
-                            json.dump(loginSystem.accounts, db, indent=4)
+                loginSystem.createPassword(newUser)
+                return
+                
 
-                        print("SUCCESS! " + newUser['username'] + " has been created.")
-                        return 
-                    else:
-                        print("PASSWORDS DO NOT MATCH!")   
+    def createPassword(newUser):
+        while True:
+            newPassword = input("Create A Password: ")
+
+            if checkSpecialPassword(newPassword):
+                confirmPassword = input("Confirm Password: ")
+                if newPassword == confirmPassword:
+                    newUser['password'] = confirmPassword
+                    loginSystem.accounts.append(newUser)
+                    with open (loginSystem.database, "w") as db:
+                        json.dump(loginSystem.accounts, db, indent=4)
+
+                    print(f"SUCCESS! {newUser['username']} has been created.")
+                    return
+                else:
+                    print("PASSWORDS DO NOT MATCH!")
+            else:
+                continue
 
     def deleteAccount():
         loginSystem.updateTempDatabase()
@@ -101,33 +111,5 @@ class loginSystem:
 
 loginSystem.main()
 
-# print(loginSystem.accounts)
-# loginSystem.userLogin()
-
-# loginSystem.createAccount()
-
-
-##Special Character Password##
-# 1 capital letter
-# 1 special char {!@#$%^&*<>?}
-# 1 num
-# len = 8
-# specialChars = ["!", "@", "#", '$', "%", "^","&","*","<",">","?"]
-
-# string = input(">>> ")
-# check = False
-# uppercaseCount = 0
-# specialCharCount = 0
-# numCount = 0
-# for letter in string:
-#     if len(string) >= 8:
-#         if letter.isupper():
-#             uppercaseCount += 1
-#         if letter in specialChars:
-#             specialCharCount += 1
-#         if letter.isnumeric():
-#             numCount += 1
-
-# if (uppercaseCount >= 1) and (specialCharCount >= 1) and (numCount >=1):
-#     check = True
-# print(check)
+# password = input(">>> ")
+# checkSpecialPassword(password)
