@@ -28,7 +28,9 @@ For account deletion, it verifies the user's credentials before removing the acc
 # Running the Application
 To run the application, ensure you have Python installed on your system. Navigate to the directory containing the application files and execute the following command in your terminal:
 
+```
 python loginSystem.py
+```
 
 
 # Dependencies
