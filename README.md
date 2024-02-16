@@ -5,6 +5,7 @@ This repository contains a full-stack web application designed for user authenti
 
 # Features
 **User Login:** Users can log in with their username and password. Successful authentication displays a success message.
+
 **Account Creation:** New users can create an account by providing a username and password, with additional validation to ensure the password meets specific criteria (handled by specialPassword.py).
 **Account Deletion:** Users can delete their accounts by re-entering their credentials for confirmation.
 
