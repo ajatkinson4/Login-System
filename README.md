@@ -34,9 +34,9 @@ python loginSystem.py
 
 
 # Dependencies
-Python 3.x
-JSON for data storage
-specialPassword.py for password validation (ensure this script is in the same directory as loginSystem.py).
+*Python 3.x
+*JSON for data storage
+*specialPassword.py for password validation (ensure this script is in the same directory as loginSystem.py).
 
 # Security Notice
 This application is a demonstration of basic authentication functionality using Python and should not be used as is in production environments. It lacks encryption for stored passwords, making it unsuitable for real-world applications without further security enhancements.
